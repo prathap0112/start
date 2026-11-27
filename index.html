@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prathap Start Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* VOICE: calm, quick, a cockpit you glance at
+   IDEA: a pilot's instrument panel — clock, launch keys, checklist, timer
+   PICTURE: the big clock + search bar as the first-screen instrument
+   COLOUR and TYPE: ice ground, ink panels, one hot pink accent; Space Grotesk + Inter
+   LAYOUT: clock/search band, launch row, link columns left, tasks/timer/notes right */
+:root{color-scheme:light dark;
+  --bg:light-dark(#dff1f7,#06222e);--panel:light-dark(#ffffff,#0b2f3d);--panel2:light-dark(#eef7fa,#0f3a4a);
+  --ink:light-dark(#06222e,#e4f3f8);--muted:light-dark(#4b6a76,#8fb3c0);--line:light-dark(#c4e1ea,#164a5c);
+  --hot:#ff2e7e}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Inter,"Segoe UI",system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:clamp(22px,4vw,48px) max(4vw,16px) 48px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px 20px}
+.time{font:500 clamp(48px,9vw,92px)/1 "Space Grotesk",sans-serif;letter-spacing:-2px;font-variant-numeric:tabular-nums}
+.greet{color:var(--muted);font-size:16px;margin-top:6px}
+.search{display:flex;gap:10px;margin:26px 0 10px}
+.search input{flex:1;font:17px Inter,sans-serif;padding:16px 20px;border-radius:14px;border:1.5px solid var(--line);background:var(--panel);color:var(--ink);outline:none;min-height:56px}
+.search input:focus{border-color:var(--hot)}
+.go{display:inline-flex;align-items:center;justify-content:center;padding:0 22px;border-radius:14px;background:var(--hot);color:#fff;text-decoration:none;font-weight:600;min-height:56px;white-space:nowrap}
+.hint{display:flex;flex-wrap:wrap;gap:4px 14px;color:var(--muted);font-size:13px;margin-bottom:26px}
+.hint b{color:var(--ink);font-family:"Space Grotesk",sans-serif}
+.dest{color:var(--hot);font-size:13px;min-height:20px;margin:-4px 0 8px}
+.pins{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px;margin-bottom:28px}
+.pin{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px;background:var(--panel);border:1px solid var(--line);border-radius:14px;text-decoration:none;font-size:13.5px;transition:transform .15s}
+.pin:hover{transform:translateY(-2px);border-color:var(--hot)}
+.av{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font:600 15px "Space Grotesk",sans-serif;color:#fff}
+.grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:18px}
+@media(max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;align-content:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.card h2{margin:0 0 8px;font:600 16px "Space Grotesk",sans-serif}
+.card .l{display:flex;align-items:center;gap:10px;padding:7px 6px;border-radius:8px;text-decoration:none;font-size:14px;min-height:36px}
+.card .l:hover{background:var(--panel2)}
+.dot{width:20px;height:20px;border-radius:6px;display:grid;place-items:center;font:600 11px "Space Grotesk",sans-serif;color:#fff;flex:none}
+.side{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:6px}
+.row input{flex:1;font:16px Inter,sans-serif;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);outline:none;min-height:44px}
+.row input:focus,textarea:focus{border-color:var(--hot)}
+button{font:500 14px Inter,sans-serif;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:0 14px;min-height:44px;cursor:pointer}
+button:hover{border-color:var(--hot)}button:focus-visible,a:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+ul{list-style:none;margin:8px 0 0;padding:0}
+li{display:flex;align-items:center;gap:10px;padding:6px 2px;border-bottom:1px solid var(--line);font-size:14px}
+li:last-child{border-bottom:0}
+li input{width:18px;height:18px;accent-color:var(--hot)}
+li span{flex:1;overflow-wrap:anywhere}li.done span{text-decoration:line-through;color:var(--muted)}
+li button{min-height:32px;padding:0 8px;background:none;border:0;color:var(--muted)}
+.empty{color:var(--muted);font-size:14px;padding:6px 0}
+.timer{font:500 54px/1 "Space Grotesk",sans-serif;text-align:center;margin:8px 0 14px;font-variant-numeric:tabular-nums}
+.btns{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+textarea{width:100%;min-height:120px;resize:vertical;font:15px/1.5 Inter,sans-serif;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);outline:none}
+.av,.dot{position:relative;overflow:hidden}.av img,.dot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:3px;background:#fff;opacity:0}
+.av.img img,.dot.img img{opacity:1}
+.sub{color:var(--muted);font-size:13.5px;margin:-4px 0 10px}
+.big{display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:10px;text-decoration:none;min-height:52px}
+.big:hover{background:var(--panel2)}.big b{display:block;font-weight:600;font-size:14.5px}.big small{color:var(--muted);font-size:13px}
+.foot{color:var(--muted);font-size:13px;text-align:center;margin-top:28px}
+@media(prefers-reduced-motion:reduce){.pin{transition:none}}
+@media(max-width:600px){.search{flex-direction:column}.go{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div><div class="time" id="time">--:--</div><div class="greet" id="greet"></div></div>
+  </div>
+
+  <form class="search" id="sf">
+    <input id="q" placeholder="Search Google, or: yt lofi · gh flutter · pub dio · gpt …" autocomplete="off" aria-label="Search">
+    <a class="go" id="go" href="https://www.google.com/">Search</a>
+  </form>
+  <div class="dest" id="dest"></div>
+  <div class="hint" id="hint"></div>
+
+  <nav class="pins" id="pins" aria-label="Quick launch"></nav>
+
+  <div class="grid">
+    <div class="cats" id="cats"></div>
+    <div class="side">
+      <section class="card">
+        <h2>Tasks &amp; notes</h2>
+        <p class="sub">Synced with your Google account on every computer.</p>
+        <a class="big" href="https://tasks.google.com/"><span class="av" style="background:#2563eb">✓</span><span><b>Google Tasks</b><small>Today's to-dos</small></span></a>
+        <a class="big" href="https://keep.google.com/"><span class="av" style="background:#ca8a04">K</span><span><b>Google Keep</b><small>Notes &amp; checklists</small></span></a>
+        <a class="big" href="https://calendar.google.com/calendar/r/day"><span class="av" style="background:#0e7490">C</span><span><b>Today's calendar</b><small>Meetings &amp; reminders</small></span></a>
+      </section>
+      <section class="card">
+        <h2>Focus timer</h2>
+        <div class="timer" id="tm">25:00</div>
+        <div class="btns">
+          <button class="on" data-min="25">Focus 25</button><button data-min="5">Break 5</button><button data-min="15">Break 15</button>
+        </div>
+        <div class="btns" style="margin-top:6px"><button id="tstart">Start</button><button id="treset">Reset</button></div>
+      </section>
+    </div>
+  </div>
+  <div class="foot">Press / to jump to search</div>
+</div>
+
+<script>
+{
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pal=['#ff2e7e','#0e7490','#7c3aed','#ea580c','#16a34a','#2563eb','#db2777','#0891b2','#ca8a04'];
+const ico=u=>{try{return 'https://www.google.com/s2/favicons?sz=64&domain='+new URL(u).hostname}catch(e){return ''}};
+const col=n=>{let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))>>>0;return pal[h%pal.length]};
+
+const engines={
+  yt:['YouTube','https://www.youtube.com/results?search_query=%s'],
+  gh:['GitHub','https://github.com/search?q=%s'],
+  pub:['pub.dev','https://pub.dev/packages?q=%s'],
+  fl:['Flutter docs','https://docs.flutter.dev/search?q=%s'],
+  aws:['AWS docs','https://docs.aws.amazon.com/search/doc-search.html?searchQuery=%s'],
+  so:['Stack Overflow','https://stackoverflow.com/search?q=%s'],
+  gpt:['ChatGPT','https://chatgpt.com/?q=%s'],
+  mdn:['MDN','https://developer.mozilla.org/en-US/search?q=%s'],
+  m:['Maps','https://www.google.com/maps/search/%s'],
+  tr:['Translate','https://translate.google.com/?sl=auto&tl=en&text=%s']
+};
+const q=document.getElementById('q'),go=document.getElementById('go'),dest=document.getElementById('dest');
+document.getElementById('hint').innerHTML=Object.entries(engines).map(([k,v])=>`<span><b>${k}</b> ${esc(v[0])}</span>`).join('');
+function resolve(s){
+  s=s.trim(); if(!s) return ['https://www.google.com/',''];
+  const sp=s.indexOf(' '),key=sp>0?s.slice(0,sp).toLowerCase():'',rest=sp>0?s.slice(sp+1).trim():'';
+  if(engines[key]&&rest) return [engines[key][1].replace('%s',encodeURIComponent(rest)),engines[key][0]];
+  if(!s.includes(' ')&&/^(https?:\/\/)?[\w-]+(\.[\w-]+)+(\/\S*)?$/.test(s)) return [s.startsWith('http')?s:'https://'+s,'Open site'];
+  return ['https://www.google.com/search?q='+encodeURIComponent(s),'Google'];
+}
+q.addEventListener('input',()=>{const [u,l]=resolve(q.value);go.href=u;dest.textContent=q.value.trim()?'→ '+l:''});
+document.getElementById('sf').addEventListener('submit',e=>{e.preventDefault();location.href=resolve(q.value)[0]});
+document.addEventListener('keydown',e=>{const t=document.activeElement.tagName;if(e.key==='/'&&t!=='INPUT'&&t!=='TEXTAREA'){e.preventDefault();q.focus()}});
+
+const pins=[['ChatGPT','https://chat.openai.com/'],['Gemini','https://gemini.google.com/app'],['Gmail','https://mail.google.com/'],
+  ['Calendar','https://calendar.google.com/'],['Drive','https://drive.google.com/'],['GitHub','https://github.com/'],
+  ['AWS','https://console.aws.amazon.com/'],['YouTube','https://www.youtube.com/'],['Maps','https://maps.google.com/']];
+document.getElementById('pins').innerHTML=pins.map(([n,u])=>`<a class="pin" href="${esc(u)}"><span class="av" style="background:${col(n)}">${esc(n[0])}<img src="${ico(u)}" alt="" onload="this.parentNode.classList.add(\'img\')" onerror="this.remove()"></span>${esc(n)}</a>`).join('');
+
+const cats=[
+  ['Dev & AI tools',[['DartPad','https://dartpad.dev/'],['JSON to Dart','https://jsontodart.com/'],['Crontab.guru','https://crontab.guru/'],['EmailJS','https://dashboard.emailjs.com/admin'],['FlutterFire','https://github.com/firebase/flutterfire'],['AppIcon','https://appicon.co/'],['Midjourney','https://midjourney.com/']]],
+  ['Learning',[['Flutter widgets','https://docs.flutter.dev/ui/widgets'],['Dart language tour','https://dart.dev/language'],['Udemy – Flutter bootcamp','https://www.udemy.com/course/flutter-bootcamp-with-dart/'],['AWS SA mock test','https://trustedinstitute.com/practice/aws-solution-architect/'],['Coursera – Google UX','https://www.coursera.org/learn/foundations-user-experience-design']]],
+  ['Design',[['Awwwards','https://www.awwwards.com/websites/sites_of_the_day/'],['Smashing Magazine','https://www.smashingmagazine.com/'],['Icons8','https://icons8.com/'],['Pexels','https://www.pexels.com/'],['Poly Haven','https://polyhaven.com/'],['Mr.Mockup','https://mrmockup.com/free-mockups/']]],
+  ['Career abroad',[['Work in Finland','https://www.workinfinland.com/en/open-jobs/'],['Europass CV','https://europass.europa.eu/en/create-europass-cv'],['Canada CRS tool','https://www.cic.gc.ca/english/immigrate/skilled/crs-tool.asp'],['Canada.ca','https://www.canada.ca/en.html']]],
+  ['Accounts',[['ACT Fibernet','https://selfcare.actcorp.in/group/chn/myaccount'],['Saral ESS','https://ess.arcfertility.in/'],['iCloud','https://www.icloud.com/'],['Adobe Acrobat','https://acrobat.adobe.com/']]],
+  ['Unwind',[['Hotstar','https://www.hotstar.com/'],['LiveChart.me','https://www.livechart.me/'],['HoYoLAB','https://www.hoyolab.com/home'],['Zomato','https://www.zomato.com/'],['NDTV','https://www.ndtv.com/']]]
+];
+document.getElementById('cats').innerHTML=cats.map(([t,ls])=>`<section class="card"><h2>${esc(t)}</h2>${ls.map(([n,u])=>`<a class="l" href="${esc(u)}"><span class="dot" style="background:${col(n)}">${esc(n[0])}<img src="${ico(u)}" alt="" onload="this.parentNode.classList.add(\'img\')" onerror="this.remove()"></span>${esc(n)}</a>`).join('')}</section>`).join('');
+
+const tick=()=>{const d=new Date(),h=d.getHours();
+  document.getElementById('time').textContent=d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('greet').textContent=(h<12?'Good morning':h<17?'Good afternoon':'Good evening')+', Prathap · '+d.toLocaleDateString([],{weekday:'long',day:'numeric',month:'long'})};
+tick();setInterval(tick,10000);
+
+let total=1500,left=total,iv=null;
+const tm=document.getElementById('tm'),ts=document.getElementById('tstart');
+const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+const show=()=>{tm.textContent=fmt(left);document.title=iv?fmt(left)+' · Focus':'Prathap Start Page'};
+const stop=()=>{clearInterval(iv);iv=null;ts.textContent='Start';show()};
+ts.onclick=()=>{if(iv){stop();return}ts.textContent='Pause';
+  iv=setInterval(()=>{left--;show();if(left<=0){stop();left=total;tm.textContent='Done!';setTimeout(show,4000)}},1000);show()};
+document.getElementById('treset').onclick=()=>{stop();left=total;show()};
+document.querySelectorAll('[data-min]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-min]').forEach(x=>x.classList.remove('on'));b.classList.add('on');stop();total=left=+b.dataset.min*60;show()});
+
+}
+</script>
+</body>
+</html>
