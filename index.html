@@ -7,100 +7,89 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Pirata+One&display=swap">
 <style>
-:root{--ink:#eaf2ff;--muted:#b4c4de;--line:rgba(255,255,255,.14);--panel:rgba(8,18,38,.50);--panel2:rgba(255,255,255,.08);--hot:#ff2e7e;--teal:#2ee6c5;--sun:#ffc94d}
+:root{--ink:#f6efe6;--muted:#c9b9a6;--line:rgba(255,210,140,.16);--panel:rgba(14,8,10,.55);--panel2:rgba(255,220,170,.07);--red:#e0283c;--gold:#f4b63f;--ember:#ff7a2e}
 *{box-sizing:border-box;min-width:0}
-html,body{margin:0}
-body{background:#0b1030;color:var(--ink);font:16px/1.5 Inter,"Segoe UI",system-ui,sans-serif;overflow-x:clip}
-a{color:inherit}
-#sky{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0}
-.page{position:relative;z-index:1}
-.glass{background:var(--panel);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);border:1px solid var(--line);border-radius:22px}
-/* hero */
-.hero-in{max-width:1240px;margin:0 auto;padding:clamp(22px,4vw,40px) max(4vw,16px) 18px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px;align-items:start}
-@media(max-width:900px){.hero-in{grid-template-columns:minmax(0,1fr)}}
-.clock{padding:22px 26px}
-.greet{font:400 22px "Pirata One",serif;color:#ffe7a8;letter-spacing:.5px}
-.time{font:600 clamp(64px,10vw,118px)/.95 "Space Grotesk",sans-serif;letter-spacing:-3px;font-variant-numeric:tabular-nums;margin:6px 0 2px;text-shadow:0 6px 30px rgba(0,0,0,.3)}
-.time .sec{font-size:.36em;letter-spacing:0;color:var(--teal);margin-left:8px;vertical-align:top;position:relative;top:.35em}
-.time .ap{font-size:.3em;letter-spacing:0;color:#cfe0ff;margin-left:6px}
-.date{font:500 18px "Space Grotesk"}
-.prog{margin-top:16px}
-.prog-l{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#d3def2}
-.bar{height:8px;border-radius:9px;background:rgba(255,255,255,.14);overflow:hidden;margin-top:6px}
-.bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--teal),var(--sun),var(--hot),var(--teal));background-size:300% 100%;animation:flow 8s linear infinite}
+html,body{margin:0;height:100%}
+body{background:#07050a;color:var(--ink);font:15px/1.45 Inter,"Segoe UI",system-ui,sans-serif;overflow:hidden}
+a{color:inherit;text-decoration:none}
+.wall{position:fixed;inset:-24px;background-color:#07050a;background-image:url("wallpaper.webp"),url("wallpaper.jpg"),url("straw-hat-luffy-one-3840x2160-22500.jpg");background-position:center 30%;background-size:cover;background-repeat:no-repeat;transform:translate3d(var(--px,0),var(--py,0),0) scale(1.02);transition:transform .6s ease-out;animation:breathe 14s ease-in-out infinite alternate}
+@keyframes breathe{to{filter:brightness(1.08) saturate(1.08)}}
+.shade{position:fixed;inset:0;background:linear-gradient(90deg,rgba(5,3,6,.72) 0,rgba(5,3,6,.15) 30%,rgba(5,3,6,0) 50%,rgba(5,3,6,.15) 70%,rgba(5,3,6,.72) 100%),radial-gradient(ellipse at 50% 45%,transparent 40%,rgba(0,0,0,.45) 100%)}
+#fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none}
+.app{position:relative;z-index:1;height:100vh;display:grid;grid-template-columns:minmax(280px,340px) 1fr minmax(300px,360px);gap:20px;padding:20px 22px}
+.col{display:flex;flex-direction:column;gap:12px;overflow:auto;scrollbar-width:none}
+.col::-webkit-scrollbar{display:none}
+.mid{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:4px}
+.glass{background:var(--panel);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 40px -20px rgba(0,0,0,.8)}
+.card{padding:14px 16px;animation:rise .6s ease both}
+.col .card:nth-child(2){animation-delay:.08s}.col .card:nth-child(3){animation-delay:.16s}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+h2{margin:0 0 8px;font:600 12.5px Inter;color:var(--muted);display:flex;align-items:center;gap:7px;letter-spacing:.2px}
+h2::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+.greet{font:400 20px "Pirata One",serif;color:var(--gold);letter-spacing:.4px}
+.time{font:600 clamp(52px,5.4vw,76px)/.95 "Space Grotesk",sans-serif;letter-spacing:-2px;font-variant-numeric:tabular-nums;margin:4px 0 2px;text-shadow:0 0 30px rgba(224,40,60,.35)}
+.time .sec{font-size:.36em;letter-spacing:0;color:var(--red);margin-left:6px;vertical-align:top;position:relative;top:.3em}
+.time .ap{font-size:.3em;letter-spacing:0;color:var(--muted);margin-left:4px}
+.date{font:500 14px "Space Grotesk"}
+.prog-l{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);margin-top:10px}
+.bar{height:6px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:5px}
+.bar i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--red),var(--ember),var(--gold),var(--red));background-size:300% 100%;animation:flow 6s linear infinite}
 @keyframes flow{to{background-position:300% 0}}
-.zones{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:16px}
-.zone{background:rgba(255,255,255,.08);border-radius:12px;padding:8px 10px}
-.zone b{display:block;font:600 17px "Space Grotesk";font-variant-numeric:tabular-nums}
-.zone span{font-size:12.5px;color:#c9d6ee;white-space:nowrap}
-@media(max-width:520px){.zones{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.wx{padding:20px 22px}
-.wx-top{display:flex;align-items:center;gap:14px}
-.wx-ico{width:84px;height:84px;flex:none}
-.wx-t{font:600 56px/1 "Space Grotesk";letter-spacing:-2px}
-.wx-c{font:500 16px Inter}
-.wx-loc{font-size:13px;color:#c9d6ee;display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px}
-.wx-loc button{background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:8px;padding:3px 9px;font:500 12px Inter;cursor:pointer;min-height:26px}
-.wx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
-.st{background:rgba(255,255,255,.08);border-radius:12px;padding:8px 10px}
-.st small{display:block;font-size:12px;color:#c9d6ee}
-.st b{font:600 16px "Space Grotesk";white-space:nowrap}
-.hours{display:flex;gap:6px;overflow-x:auto;margin-top:12px;padding-bottom:4px;scrollbar-width:thin}
-.hr{flex:none;width:58px;text-align:center;background:rgba(255,255,255,.08);border-radius:12px;padding:7px 4px;font-size:12.5px}
-.hr svg{width:28px;height:28px;display:block;margin:3px auto}
-.hr b{font:600 14px "Space Grotesk"}
-.hr .p{color:#9bd8ff;font-size:11.5px}
-/* search */
-.searchwrap{max-width:1240px;margin:0 auto;padding:0 max(4vw,16px)}
-.search{display:flex;gap:10px;padding:10px;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
-.search input{flex:1;font:17px Inter;padding:12px 14px;border:0;background:transparent;color:var(--ink);outline:none;min-height:48px}
-.search input::placeholder{color:#a9b9d4}
-.go{display:inline-flex;align-items:center;padding:0 24px;border-radius:14px;background:linear-gradient(135deg,var(--hot),#ff7a59);color:#fff;text-decoration:none;font-weight:600;min-height:48px}
-.hint{display:flex;flex-wrap:wrap;gap:4px 14px;color:#e3ecfb;font-size:13px;margin:10px 0 0;padding:8px 14px;border-radius:14px;background:rgba(8,18,38,.45);backdrop-filter:blur(8px);width:fit-content;max-width:100%}
-.hint b{color:var(--teal);font-family:"Space Grotesk"}
-.dest{color:#ffd1e2;font-size:13px;min-height:18px;margin:4px 6px 0}
-/* body */
-.wrap{max-width:1240px;margin:max(16px,calc(100vh - 660px)) auto 0;padding:14px max(4vw,16px) 60px}
-@media(max-width:900px){.wrap{margin-top:16px}}
-.pins{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:10px;margin:6px 0 22px}
-.pin{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px 12px;text-decoration:none;font-size:13px;border-radius:18px;transition:transform .2s,border-color .2s,box-shadow .2s;opacity:0;animation:rise .5s ease forwards}
-.pin:hover{transform:translateY(-5px) rotate(-1deg);border-color:var(--c);box-shadow:0 12px 30px -10px var(--c)}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.av{position:relative;overflow:hidden;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font:600 15px "Space Grotesk";color:#fff}
-.av img,.dot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:4px;background:#fff;opacity:0}
+.zones{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px}
+.zone{background:var(--panel2);border-radius:10px;padding:5px 7px}
+.zone b{display:block;font:600 14px "Space Grotesk";font-variant-numeric:tabular-nums}
+.zone span{font-size:11px;color:var(--muted)}
+.wx-top{display:flex;align-items:center;gap:10px}
+.wx-ico{width:58px;height:58px;flex:none}
+.wx-t{font:600 40px/1 "Space Grotesk";letter-spacing:-1px}
+.wx-c{font-size:13.5px}
+.wx-loc{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.wx-loc button{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:7px;padding:2px 7px;font:500 11.5px Inter;cursor:pointer}
+.wx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:10px}
+.st{background:var(--panel2);border-radius:10px;padding:5px 8px}
+.st small{display:block;font-size:11px;color:var(--muted)}
+.st b{font:600 13.5px "Space Grotesk";white-space:nowrap}
+.hours{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;margin-top:8px}
+.hr{text-align:center;background:var(--panel2);border-radius:10px;padding:5px 2px;font-size:11px}
+.hr svg{width:22px;height:22px;display:block;margin:2px auto}
+.hr b{font:600 13px "Space Grotesk"}
+.search{display:flex;gap:8px;padding:8px}
+.search input{flex:1;font:15px Inter;padding:8px 10px;border:0;background:transparent;color:var(--ink);outline:none;min-height:40px}
+.search input::placeholder{color:#a8988a}
+.go{display:inline-flex;align-items:center;padding:0 16px;border-radius:12px;background:linear-gradient(135deg,var(--red),var(--ember));color:#fff;font-weight:600;min-height:40px;box-shadow:0 0 18px -4px var(--red)}
+.hint{display:flex;flex-wrap:wrap;gap:2px 10px;font-size:11.5px;color:var(--muted);padding:0 4px}
+.hint b{color:var(--gold);font-family:"Space Grotesk"}
+.dest{color:var(--gold);font-size:11.5px;min-height:15px;padding:0 4px}
+.pins{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+.pin{display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 2px 7px;border-radius:12px;background:var(--panel2);border:1px solid transparent;font-size:11.5px;transition:transform .18s,border-color .18s,box-shadow .18s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pin:hover{transform:translateY(-3px);border-color:var(--c);box-shadow:0 8px 20px -8px var(--c)}
+.av{position:relative;overflow:hidden;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font:600 13px "Space Grotesk";color:#fff}
+.av img,.dot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:3px;background:#fff;opacity:0}
 .av.img img,.dot.img img{opacity:1}
-.grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:18px}
-@media(max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
-.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;align-content:start}
-.card{padding:16px;border-radius:18px;opacity:0;animation:rise .5s ease forwards}
-.card h2{margin:0 0 8px;font:600 16px "Space Grotesk";display:flex;align-items:center;gap:8px}
-.card h2::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,var(--teal));box-shadow:0 0 12px var(--c,var(--teal))}
-.l{display:flex;align-items:center;gap:10px;padding:7px 6px;border-radius:10px;text-decoration:none;font-size:14px;min-height:36px;transition:background .15s,padding .15s}
-.l:hover{background:var(--panel2);padding-left:10px}
-.dot{position:relative;overflow:hidden;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;font:600 11px "Space Grotesk";color:#fff;flex:none}
-.side{display:flex;flex-direction:column;gap:14px}
-.sub{color:var(--muted);font-size:13.5px;margin:-4px 0 8px}
-.big{display:flex;align-items:center;gap:12px;padding:9px 8px;border-radius:12px;text-decoration:none;min-height:52px;transition:background .15s}
-.big:hover{background:var(--panel2)}.big b{display:block;font-weight:600;font-size:14.5px}.big small{color:var(--muted);font-size:13px}
-.ring{position:relative;width:150px;height:150px;margin:6px auto 12px}
+.tabs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.tab{font:500 12px Inter;padding:4px 9px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;min-height:28px}
+.tab:hover{color:var(--ink)}
+.tab.on{background:var(--gold);border-color:var(--gold);color:#1a0d05}
+.links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 8px;min-height:148px;align-content:start}
+.l{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:8px;font-size:13px;transition:background .15s,transform .15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.l:hover{background:var(--panel2);transform:translateX(2px)}
+.dot{position:relative;overflow:hidden;width:18px;height:18px;border-radius:5px;display:grid;place-items:center;font:600 10px "Space Grotesk";color:#fff;flex:none}
+.timer{display:flex;align-items:center;gap:12px}
+.ring{position:relative;width:64px;height:64px;flex:none}
 .ring svg{width:100%;height:100%;transform:rotate(-90deg)}
-.ring .t{position:absolute;inset:0;display:grid;place-items:center;font:600 34px "Space Grotesk";font-variant-numeric:tabular-nums}
-.btns{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
-button.b{font:500 14px Inter;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:0 14px;min-height:42px;cursor:pointer}
-button.b:hover{border-color:var(--teal)}button.b.on{background:var(--teal);color:#05211c;border-color:var(--teal)}
-button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
-.quote{font:500 15px/1.5 "Space Grotesk"}
-.quote small{display:block;color:var(--muted);font:13px Inter;margin-top:6px}
-.wallbtn{position:fixed;right:18px;bottom:18px;z-index:5;display:flex;align-items:center;gap:8px;padding:0 16px;min-height:44px;border-radius:14px;color:#fff;font:600 14px Inter;cursor:pointer}
-.wallmenu{position:fixed;right:18px;bottom:72px;z-index:5;width:260px;padding:10px;display:none}
-.wallmenu.open{display:block}
-.wallmenu button,.wallmenu label{display:block;width:100%;text-align:left;background:none;border:0;color:var(--ink);font:500 14px Inter;padding:10px 12px;border-radius:10px;cursor:pointer;min-height:44px}
-.wallmenu button:hover,.wallmenu label:hover{background:var(--panel2)}
-.wallmenu .on{color:var(--teal)}
-.wallmenu small{display:block;color:var(--muted);font-size:12px;padding:4px 12px 6px}
-.foot{color:#d3def2;font-size:13px;text-align:center;margin-top:28px;text-shadow:0 1px 6px rgba(0,0,0,.6)}
-@media(max-width:600px){.search{flex-direction:column}.go{justify-content:center}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.pin,.card{opacity:1}}
+.ring .t{position:absolute;inset:0;display:grid;place-items:center;font:600 14px "Space Grotesk";font-variant-numeric:tabular-nums}
+.btns{display:flex;flex-wrap:wrap;gap:5px}
+button.b{font:500 12.5px Inter;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:0 10px;min-height:32px;cursor:pointer}
+button.b:hover{border-color:var(--gold)}button.b.on{background:var(--red);border-color:var(--red);color:#fff}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.quote{font:400 clamp(17px,1.5vw,22px)/1.3 "Pirata One",serif;color:#ffe2b0;text-align:center;text-shadow:0 2px 14px rgba(0,0,0,.9);max-width:520px}
+.quote small{display:block;font:12px Inter;color:var(--muted);margin-top:4px}
+.keys{display:flex;gap:6px;margin-top:8px;font-size:11.5px;color:var(--muted)}
+.keys a{padding:4px 10px;border-radius:99px;background:rgba(10,5,8,.55);border:1px solid var(--line)}
+.keys a:hover{color:var(--ink);border-color:var(--gold)}
+@media(max-height:720px) and (min-width:1101px){.app{padding:12px 16px;gap:14px}.col{gap:8px}.card{padding:10px 13px}.time{font-size:50px}.hint{display:none}.hours{display:none}.prog-l{margin-top:6px}.zones{margin-top:7px}.wx-grid{margin-top:7px}.pin{padding:6px 2px 5px}.links{min-height:0}.wx-ico{width:48px;height:48px}.wx-t{font-size:34px}}
+@media(max-width:1100px){body{overflow:auto}.app{height:auto;grid-template-columns:1fr}.mid{order:3;min-height:40vh}.shade{background:rgba(5,3,6,.55)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .spin{transform-origin:32px 30px;animation:spin 18s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 .drift{animation:drift 5s ease-in-out infinite alternate}@keyframes drift{to{transform:translateX(4px)}}
 .drop{animation:drop 1s linear infinite}@keyframes drop{from{transform:translateY(-3px);opacity:0}40%{opacity:1}to{transform:translateY(6px);opacity:0}}
@@ -108,94 +97,83 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 </style>
 </head>
 <body>
-<canvas id="sky" aria-hidden="true"></canvas>
-<div class="page">
-<header class="hero-in">
-  <section class="glass clock" aria-label="Clock">
-    <div class="greet" id="greet">Ahoy, Captain Prathap</div>
-    <div class="time" id="time">--:--</div>
-    <div class="date" id="date"></div>
-    <div class="prog">
-      <div class="prog-l"><span id="dayl">Day progress</span><span id="dayp">0%</span></div>
+<div class="wall" id="wall" aria-hidden="true"></div>
+<div class="shade" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<div class="app">
+  <aside class="col">
+    <section class="glass card" aria-label="Clock">
+      <div class="greet" id="greet">Ahoy, Captain Prathap</div>
+      <div class="time" id="time">--:--</div>
+      <div class="date" id="date"></div>
+      <div class="prog-l"><span id="dayl">Day progress</span><span id="dayp"></span></div>
       <div class="bar"><i id="dayb" style="width:0"></i></div>
-    </div>
-    <div class="zones" id="zones"></div>
-  </section>
-  <section class="glass wx" aria-label="Weather" aria-live="polite">
-    <div class="wx-top">
-      <div class="wx-ico" id="wxi"></div>
-      <div>
-        <div class="wx-t" id="wxt">--°</div>
-        <div class="wx-c" id="wxc">Loading weather…</div>
-        <div class="wx-loc"><span id="wxl">Chennai</span><button id="loc" type="button">Use my location</button></div>
-      </div>
-    </div>
-    <div class="wx-grid" id="wxg"></div>
-    <div class="hours" id="hours"></div>
-  </section>
-</header>
-
-<div class="searchwrap">
-  <form class="search glass" id="sf">
-    <input id="q" placeholder="Search Google, or: yt lofi · gh flutter · pub dio · ig …" autocomplete="off" aria-label="Search" autofocus>
-    <a class="go" id="go" href="https://www.google.com/">Search</a>
-  </form>
-  <div class="dest" id="dest"></div>
-  <div class="hint" id="hint"></div>
-</div>
-
-<main class="wrap">
-  <nav class="pins" id="pins" aria-label="Quick launch"></nav>
-  <div class="grid">
-    <div class="cats" id="cats"></div>
-    <div class="side">
-      <section class="card glass" style="--c:#4f8cff">
-        <h2>Tasks &amp; notes</h2>
-        <p class="sub">Synced with your Google account everywhere.</p>
-        <a class="big" href="https://tasks.google.com/"><span class="av" style="background:#2563eb">✓</span><span><b>Google Tasks</b><small>Today's to-dos</small></span></a>
-        <a class="big" href="https://keep.google.com/"><span class="av" style="background:#ca8a04">K</span><span><b>Google Keep</b><small>Notes &amp; checklists</small></span></a>
-        <a class="big" href="https://calendar.google.com/calendar/r/day"><span class="av" style="background:#0e7490">C</span><span><b>Today's calendar</b><small>Meetings &amp; reminders</small></span></a>
-      </section>
-      <section class="card glass" style="--c:#2ee6c5">
-        <h2>Focus timer</h2>
-        <div class="ring">
-          <svg viewBox="0 0 120 120"><defs><linearGradient id="rg"><stop offset="0" stop-color="#2ee6c5"/><stop offset="1" stop-color="#ff2e7e"/></linearGradient></defs><circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="9"/><circle id="arc" cx="60" cy="60" r="52" fill="none" stroke="url(#rg)" stroke-width="9" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="0"/></svg>
-          <div class="t" id="tm">25:00</div>
+      <div class="zones" id="zones"></div>
+    </section>
+    <section class="glass card" aria-label="Weather" aria-live="polite">
+      <div class="wx-top">
+        <div class="wx-ico" id="wxi"></div>
+        <div>
+          <div class="wx-t" id="wxt">--°</div>
+          <div class="wx-c" id="wxc">Loading weather…</div>
+          <div class="wx-loc"><span id="wxl">Chennai</span><button id="loc" type="button">Use my location</button></div>
         </div>
-        <div class="btns"><button class="b on" data-min="25">Focus 25</button><button class="b" data-min="5">Break 5</button><button class="b" data-min="15">Break 15</button></div>
-        <div class="btns" style="margin-top:6px"><button class="b" id="tstart">Start</button><button class="b" id="treset">Reset</button></div>
-      </section>
-      <section class="card glass" style="--c:#ffc94d">
-        <h2>Thought for today</h2>
-        <div class="quote" id="quote"></div>
-      </section>
-    </div>
+      </div>
+      <div class="wx-grid" id="wxg"></div>
+      <div class="hours" id="hours"></div>
+    </section>
+    <section class="glass card">
+      <h2>Focus timer</h2>
+      <div class="timer">
+        <div class="ring"><svg viewBox="0 0 120 120"><defs><linearGradient id="rg"><stop offset="0" stop-color="#f4b63f"/><stop offset="1" stop-color="#e0283c"/></linearGradient></defs><circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="10"/><circle id="arc" cx="60" cy="60" r="52" fill="none" stroke="url(#rg)" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="0"/></svg><div class="t" id="tm">25:00</div></div>
+        <div>
+          <div class="btns"><button class="b on" data-min="25">25</button><button class="b" data-min="5">5</button><button class="b" data-min="15">15</button></div>
+          <div class="btns" style="margin-top:5px"><button class="b" id="tstart">Start</button><button class="b" id="treset">Reset</button></div>
+        </div>
+      </div>
+    </section>
+  </aside>
+
+  <div class="mid">
+    <div class="quote" id="quote"></div>
+    <nav class="keys" aria-label="Tasks and notes">
+      <a href="https://tasks.google.com/">Google Tasks</a><a href="https://keep.google.com/">Keep</a><a href="https://calendar.google.com/calendar/r/day">Today's calendar</a>
+    </nav>
   </div>
-  <div class="foot">Press / to search · Weather by Open-Meteo · Original illustration</div>
-</main>
+
+  <aside class="col">
+    <div>
+      <form class="search glass" id="sf">
+        <input id="q" placeholder="Search Google, or yt · gh · pub · ig …" autocomplete="off" aria-label="Search" autofocus>
+        <a class="go" id="go" href="https://www.google.com/">Search</a>
+      </form>
+      <div class="dest" id="dest"></div>
+      <div class="hint" id="hint"></div>
+    </div>
+    <section class="glass card">
+      <h2>Quick launch</h2>
+      <nav class="pins" id="pins"></nav>
+    </section>
+    <section class="glass card">
+      <div class="tabs" id="tabs" role="tablist"></div>
+      <div class="links" id="links" role="tabpanel"></div>
+    </section>
+  </aside>
 </div>
 
-<button class="wallbtn glass" id="wallbtn" type="button" aria-expanded="false">Wallpaper</button>
-<div class="wallmenu glass" id="wallmenu" role="menu">
-  <button type="button" data-w="scene" role="menuitem">Animated seascape</button>
-  <button type="button" data-w="synced" id="wsync" role="menuitem">Synced wallpaper (all computers)</button>
-  <label role="menuitem">Upload image from this computer…<input type="file" id="wfile" accept="image/*" hidden></label>
-  <button type="button" id="wclear" role="menuitem">Remove uploaded image</button>
-  <small id="wnote">Uploaded images stay on this computer. Weather effects still animate on top.</small>
-</div>
 <script>
 {
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const store={get(k,d){try{const v=localStorage.getItem('sp_'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('sp_'+k,JSON.stringify(v))}catch(e){}}};
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const pal=['#ff2e7e','#0ea5a4','#7c3aed','#ea580c','#16a34a','#2563eb','#db2777','#0891b2','#ca8a04'];
+const pal=['#e0283c','#0ea5a4','#7c3aed','#ea580c','#16a34a','#2563eb','#db2777','#0891b2','#ca8a04'];
 const col=n=>{let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))>>>0;return pal[h%pal.length]};
 const ico=u=>{try{return 'https://www.google.com/s2/favicons?sz=64&domain='+new URL(u).hostname}catch(e){return ''}};
 const badge=(cls,n,u,c)=>`<span class="${cls}" style="background:${c||col(n)}">${esc(n[0])}<img src="${ico(u)}" alt="" onload="this.parentNode.classList.add('img')" onerror="this.remove()"></span>`;
 
-/* search */
-const engines={yt:['YouTube','https://www.youtube.com/results?search_query=%s'],gh:['GitHub','https://github.com/search?q=%s'],pub:['pub.dev','https://pub.dev/packages?q=%s'],fl:['Flutter docs','https://docs.flutter.dev/search?q=%s'],aws:['AWS docs','https://docs.aws.amazon.com/search/doc-search.html?searchQuery=%s'],so:['Stack Overflow','https://stackoverflow.com/search?q=%s'],gpt:['ChatGPT','https://chatgpt.com/?q=%s'],ig:['Instagram','https://www.instagram.com/explore/search/keyword/?q=%s'],mdn:['MDN','https://developer.mozilla.org/en-US/search?q=%s'],m:['Maps','https://www.google.com/maps/search/%s'],tr:['Translate','https://translate.google.com/?sl=auto&tl=en&text=%s']};
+const engines={yt:['YouTube','https://www.youtube.com/results?search_query=%s'],gh:['GitHub','https://github.com/search?q=%s'],pub:['pub.dev','https://pub.dev/packages?q=%s'],fl:['Flutter','https://docs.flutter.dev/search?q=%s'],aws:['AWS','https://docs.aws.amazon.com/search/doc-search.html?searchQuery=%s'],so:['StackOverflow','https://stackoverflow.com/search?q=%s'],gpt:['ChatGPT','https://chatgpt.com/?q=%s'],ig:['Instagram','https://www.instagram.com/explore/search/keyword/?q=%s'],m:['Maps','https://www.google.com/maps/search/%s'],tr:['Translate','https://translate.google.com/?sl=auto&tl=en&text=%s']};
 const q=$('q'),go=$('go');
 $('hint').innerHTML=Object.entries(engines).map(([k,v])=>`<span><b>${k}</b> ${esc(v[0])}</span>`).join('');
 function resolve(s){s=s.trim();if(!s)return['https://www.google.com/',''];
@@ -207,25 +185,29 @@ q.addEventListener('input',()=>{const[u,l]=resolve(q.value);go.href=u;$('dest').
 $('sf').addEventListener('submit',e=>{e.preventDefault();location.href=resolve(q.value)[0]});
 document.addEventListener('keydown',e=>{const t=document.activeElement.tagName;if(e.key==='/'&&t!=='INPUT'&&t!=='TEXTAREA'){e.preventDefault();q.focus()}});
 
-/* links */
-const pins=[['ChatGPT','https://chat.openai.com/','#10a37f'],['Gemini','https://gemini.google.com/app','#4f8cff'],['Gmail','https://mail.google.com/','#ea4335'],['Calendar','https://calendar.google.com/','#1a73e8'],['Drive','https://drive.google.com/','#fbbc04'],['GitHub','https://github.com/','#a78bfa'],['Instagram','https://www.instagram.com/','#e1306c'],['Business Suite','https://business.facebook.com/latest/home','#0866ff'],['AWS','https://console.aws.amazon.com/','#ff9900'],['YouTube','https://www.youtube.com/','#ff0033'],['Maps','https://maps.google.com/','#34a853']];
-$('pins').innerHTML=pins.map(([n,u,c],i)=>`<a class="pin glass" href="${esc(u)}" style="--c:${c};animation-delay:${i*40}ms">${badge('av',n,u,c)}${esc(n)}</a>`).join('');
-const cats=[
- ['Dev & AI tools','#2ee6c5',[['DartPad','https://dartpad.dev/'],['JSON to Dart','https://jsontodart.com/'],['Crontab.guru','https://crontab.guru/'],['EmailJS','https://dashboard.emailjs.com/admin'],['FlutterFire','https://github.com/firebase/flutterfire'],['AppIcon','https://appicon.co/'],['Midjourney','https://midjourney.com/']]],
- ['Social & business','#e1306c',[['Instagram','https://www.instagram.com/'],['Meta Business Suite','https://business.facebook.com/latest/home'],['Business Suite – Inbox','https://business.facebook.com/latest/inbox'],['Business Suite – Insights','https://business.facebook.com/latest/insights'],['Meta Ads Manager','https://adsmanager.facebook.com/'],['Facebook','https://www.facebook.com/']]],
- ['Learning','#4f8cff',[['Flutter widgets','https://docs.flutter.dev/ui/widgets'],['Dart language tour','https://dart.dev/language'],['Udemy – Flutter bootcamp','https://www.udemy.com/course/flutter-bootcamp-with-dart/'],['AWS SA mock test','https://trustedinstitute.com/practice/aws-solution-architect/'],['Coursera – Google UX','https://www.coursera.org/learn/foundations-user-experience-design']]],
- ['Design','#a78bfa',[['Awwwards','https://www.awwwards.com/websites/sites_of_the_day/'],['Smashing Magazine','https://www.smashingmagazine.com/'],['Icons8','https://icons8.com/'],['Pexels','https://www.pexels.com/'],['Poly Haven','https://polyhaven.com/'],['Mr.Mockup','https://mrmockup.com/free-mockups/']]],
- ['Career abroad','#ffc94d',[['Work in Finland','https://www.workinfinland.com/en/open-jobs/'],['Europass CV','https://europass.europa.eu/en/create-europass-cv'],['Canada CRS tool','https://www.cic.gc.ca/english/immigrate/skilled/crs-tool.asp'],['Canada.ca','https://www.canada.ca/en.html']]],
- ['Accounts','#38bdf8',[['ACT Fibernet','https://selfcare.actcorp.in/group/chn/myaccount'],['Saral ESS','https://ess.arcfertility.in/'],['iCloud','https://www.icloud.com/'],['Adobe Acrobat','https://acrobat.adobe.com/']]],
- ['Unwind','#ff7a59',[['Hotstar','https://www.hotstar.com/'],['LiveChart.me','https://www.livechart.me/'],['HoYoLAB','https://www.hoyolab.com/home'],['Zomato','https://www.zomato.com/'],['NDTV','https://www.ndtv.com/']]]];
-$('cats').innerHTML=cats.map(([t,c,ls],i)=>`<section class="card glass" style="--c:${c};animation-delay:${200+i*60}ms"><h2>${esc(t)}</h2>${ls.map(([n,u])=>`<a class="l" href="${esc(u)}">${badge('dot',n,u)}${esc(n)}</a>`).join('')}</section>`).join('');
-document.querySelectorAll('.side .card').forEach((c,i)=>c.style.animationDelay=(300+i*80)+'ms');
+const pins=[['ChatGPT','https://chat.openai.com/','#10a37f'],['Gemini','https://gemini.google.com/app','#4f8cff'],['Gmail','https://mail.google.com/','#ea4335'],['Calendar','https://calendar.google.com/','#1a73e8'],['Drive','https://drive.google.com/','#fbbc04'],['GitHub','https://github.com/','#a78bfa'],['Instagram','https://www.instagram.com/','#e1306c'],['Business','https://business.facebook.com/latest/home','#0866ff'],['AWS','https://console.aws.amazon.com/','#ff9900'],['YouTube','https://www.youtube.com/','#ff0033'],['Maps','https://maps.google.com/','#34a853'],['Hotstar','https://www.hotstar.com/','#1f80e0']];
+$('pins').innerHTML=pins.map(([n,u,c])=>`<a class="pin" href="${esc(u)}" style="--c:${c}" title="${esc(n)}">${badge('av',n,u,c)}${esc(n)}</a>`).join('');
 
-/* quote */
-const quotes=[['Simplicity is prerequisite for reliability.','Edsger Dijkstra'],['Make it work, make it right, make it fast.','Kent Beck'],['The best way to predict the future is to invent it.','Alan Kay'],['Well begun is half done.','Aristotle'],['Design is not just what it looks like. Design is how it works.','Steve Jobs'],['First, solve the problem. Then, write the code.','John Johnson'],['A smooth sea never made a skilled sailor.','Proverb'],['Focus on being productive instead of busy.','Tim Ferriss'],['It always seems impossible until it is done.','Nelson Mandela'],['The pessimist complains about the wind; the optimist adjusts the sails.','William A. Ward']];
+const cats=[
+ ['Dev',[['DartPad','https://dartpad.dev/'],['JSON to Dart','https://jsontodart.com/'],['Crontab.guru','https://crontab.guru/'],['EmailJS','https://dashboard.emailjs.com/admin'],['FlutterFire','https://github.com/firebase/flutterfire'],['AppIcon','https://appicon.co/'],['Midjourney','https://midjourney.com/'],['Flutter widgets','https://docs.flutter.dev/ui/widgets']]],
+ ['Social',[['Instagram','https://www.instagram.com/'],['Business Suite','https://business.facebook.com/latest/home'],['BS – Inbox','https://business.facebook.com/latest/inbox'],['BS – Insights','https://business.facebook.com/latest/insights'],['Ads Manager','https://adsmanager.facebook.com/'],['Facebook','https://www.facebook.com/']]],
+ ['Learn',[['Flutter widgets','https://docs.flutter.dev/ui/widgets'],['Dart tour','https://dart.dev/language'],['Udemy Flutter','https://www.udemy.com/course/flutter-bootcamp-with-dart/'],['AWS mock test','https://trustedinstitute.com/practice/aws-solution-architect/'],['Coursera UX','https://www.coursera.org/learn/foundations-user-experience-design']]],
+ ['Design',[['Awwwards','https://www.awwwards.com/websites/sites_of_the_day/'],['Smashing Mag','https://www.smashingmagazine.com/'],['Icons8','https://icons8.com/'],['Pexels','https://www.pexels.com/'],['Poly Haven','https://polyhaven.com/'],['Mr.Mockup','https://mrmockup.com/free-mockups/']]],
+ ['Career',[['Work in Finland','https://www.workinfinland.com/en/open-jobs/'],['Europass CV','https://europass.europa.eu/en/create-europass-cv'],['Canada CRS','https://www.cic.gc.ca/english/immigrate/skilled/crs-tool.asp'],['Canada.ca','https://www.canada.ca/en.html']]],
+ ['Accounts',[['ACT Fibernet','https://selfcare.actcorp.in/group/chn/myaccount'],['Saral ESS','https://ess.arcfertility.in/'],['iCloud','https://www.icloud.com/'],['Acrobat','https://acrobat.adobe.com/']]],
+ ['Unwind',[['Hotstar','https://www.hotstar.com/'],['LiveChart','https://www.livechart.me/'],['HoYoLAB','https://www.hoyolab.com/home'],['Zomato','https://www.zomato.com/'],['NDTV','https://www.ndtv.com/']]]];
+let cur=store.get('tab',0);if(!cats[cur])cur=0;
+function renderTabs(){
+  $('tabs').innerHTML=cats.map(([t],i)=>`<button class="tab${i===cur?' on':''}" role="tab" aria-selected="${i===cur}" data-i="${i}">${esc(t)}</button>`).join('');
+  $('links').innerHTML=cats[cur][1].map(([n,u])=>`<a class="l" href="${esc(u)}" title="${esc(n)}">${badge('dot',n,u)}${esc(n)}</a>`).join('')}
+const pick=i=>{if(i===undefined||+i===cur)return;cur=+i;store.set('tab',cur);renderTabs()};
+$('tabs').addEventListener('click',e=>pick(e.target.dataset.i));
+$('tabs').addEventListener('mouseover',e=>pick(e.target.dataset.i));
+renderTabs();
+
+const quotes=[['A smooth sea never made a skilled sailor.','Proverb'],['Simplicity is prerequisite for reliability.','Edsger Dijkstra'],['Make it work, make it right, make it fast.','Kent Beck'],['The best way to predict the future is to invent it.','Alan Kay'],['Well begun is half done.','Aristotle'],['First, solve the problem. Then, write the code.','John Johnson'],['The pessimist complains about the wind; the optimist adjusts the sails.','William A. Ward'],['It always seems impossible until it is done.','Nelson Mandela'],['Focus on being productive instead of busy.','Tim Ferriss']];
 {const d=new Date(),k=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5)%quotes.length;$('quote').innerHTML=`“${esc(quotes[k][0])}”<small>— ${esc(quotes[k][1])}</small>`}
 
-/* clock */
 let sunrise=null,sunset=null;
 const zones=[['Chennai','Asia/Kolkata'],['Helsinki','Europe/Helsinki'],['Toronto','America/Toronto'],['London','Europe/London']];
 function tick(){
@@ -234,7 +216,7 @@ function tick(){
   $('time').innerHTML=`${p[0]}:${p[1]}<span class="sec">${p[2]}</span><span class="ap">${p[3]}</span>`;
   $('greet').textContent=(h<5?'Night watch':h<12?'Good morning':h<17?'Good afternoon':h<21?'Good evening':'Good night')+', Captain Prathap';
   const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));t.setUTCDate(t.getUTCDate()+4-(t.getUTCDay()||7));const wk=Math.ceil(((t-Date.UTC(t.getUTCFullYear(),0,1))/864e5+1)/7);
-  $('date').textContent=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+' · Week '+wk;
+  $('date').textContent=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})+' · Week '+wk;
   const pct=(h*3600+d.getMinutes()*60+d.getSeconds())/864;
   let lbl='Day progress';
   if(sunset&&sunrise){const ms=sunset-d;if(d>sunrise&&ms>0)lbl=`Daylight left ${Math.floor(ms/36e5)}h ${Math.round(ms%36e5/6e4)}m`;else lbl='Night watch'}
@@ -243,31 +225,30 @@ function tick(){
 }
 tick();setInterval(tick,1000);
 
-/* weather */
 const WMO={0:['Clear sky','clear'],1:['Mainly clear','clear'],2:['Partly cloudy','partly'],3:['Overcast','cloudy'],45:['Fog','fog'],48:['Rime fog','fog'],51:['Light drizzle','rain'],53:['Drizzle','rain'],55:['Heavy drizzle','rain'],61:['Light rain','rain'],63:['Rain','rain'],65:['Heavy rain','rain'],66:['Freezing rain','rain'],67:['Freezing rain','rain'],71:['Light snow','snow'],73:['Snow','snow'],75:['Heavy snow','snow'],77:['Snow grains','snow'],80:['Rain showers','rain'],81:['Rain showers','rain'],82:['Violent showers','rain'],85:['Snow showers','snow'],86:['Snow showers','snow'],95:['Thunderstorm','storm'],96:['Thunderstorm, hail','storm'],99:['Thunderstorm, hail','storm']};
 function icon(kind,day){
-  const sun=`<g class="spin"><circle cx="32" cy="30" r="11" fill="#ffc94d"/>${[0,45,90,135,180,225,270,315].map(a=>`<rect x="31" y="11" width="2.4" height="6" rx="1.2" fill="#ffc94d" transform="rotate(${a} 32 30)"/>`).join('')}</g>`;
-  const moon=`<path d="M38 16a14 14 0 1 0 8 24 12 12 0 0 1-8-24z" fill="#e6ecff"/>`;
+  const sun=`<g class="spin"><circle cx="32" cy="30" r="11" fill="#f4b63f"/>${[0,45,90,135,180,225,270,315].map(a=>`<rect x="31" y="11" width="2.4" height="6" rx="1.2" fill="#f4b63f" transform="rotate(${a} 32 30)"/>`).join('')}</g>`;
+  const moon=`<path d="M38 16a14 14 0 1 0 8 24 12 12 0 0 1-8-24z" fill="#f3e9da"/>`;
   const cloud=(x,y,c)=>`<g class="drift"><path d="M${x} ${y}h26a9 9 0 0 0 0-18 12 12 0 0 0-23-2 8 8 0 0 0-3 20z" fill="${c}"/></g>`;
   const body=day?sun:moon;
   if(kind==='clear')return `<svg viewBox="0 0 64 64">${body}</svg>`;
-  if(kind==='partly')return `<svg viewBox="0 0 64 64"><g transform="translate(-6,-6)">${body}</g>${cloud(18,50,'#f4f7ff')}</svg>`;
-  if(kind==='cloudy')return `<svg viewBox="0 0 64 64">${cloud(10,38,'#b9c6dd')}${cloud(20,48,'#eef2fb')}</svg>`;
-  if(kind==='fog')return `<svg viewBox="0 0 64 64">${cloud(14,36,'#dfe6f3')}${[44,50,56].map((y,i)=>`<rect x="${10+i*3}" y="${y}" width="${42-i*6}" height="3" rx="1.5" fill="#cfd8e8" class="drift"/>`).join('')}</svg>`;
-  const drops=kind==='snow'?[18,30,42].map((x,i)=>`<circle cx="${x}" cy="50" r="2.6" fill="#fff" class="drop" style="animation-delay:${i*.3}s"/>`).join(''):[18,28,38,48].map((x,i)=>`<rect x="${x}" y="46" width="2.6" height="8" rx="1.3" fill="#7cc8ff" class="drop" style="animation-delay:${i*.25}s"/>`).join('');
-  const bolt=kind==='storm'?`<path d="M34 40l-7 11h6l-3 9 9-13h-6l4-7z" fill="#ffd84d" class="flash"/>`:'';
-  return `<svg viewBox="0 0 64 64">${cloud(14,40,'#dfe6f3')}${drops}${bolt}</svg>`;
+  if(kind==='partly')return `<svg viewBox="0 0 64 64"><g transform="translate(-6,-6)">${body}</g>${cloud(18,50,'#efe7dc')}</svg>`;
+  if(kind==='cloudy')return `<svg viewBox="0 0 64 64">${cloud(10,38,'#b8aea4')}${cloud(20,48,'#eee6dc')}</svg>`;
+  if(kind==='fog')return `<svg viewBox="0 0 64 64">${cloud(14,36,'#ddd4ca')}${[44,50,56].map((y,i)=>`<rect x="${10+i*3}" y="${y}" width="${42-i*6}" height="3" rx="1.5" fill="#cfc5ba" class="drift"/>`).join('')}</svg>`;
+  const drops=kind==='snow'?[18,30,42].map((x,i)=>`<circle cx="${x}" cy="50" r="2.6" fill="#fff" class="drop" style="animation-delay:${i*.3}s"/>`).join(''):[18,28,38,48].map((x,i)=>`<rect x="${x}" y="46" width="2.6" height="8" rx="1.3" fill="#8cc8ff" class="drop" style="animation-delay:${i*.25}s"/>`).join('');
+  const bolt=kind==='storm'?`<path d="M34 40l-7 11h6l-3 9 9-13h-6l4-7z" fill="#f4b63f" class="flash"/>`:'';
+  return `<svg viewBox="0 0 64 64">${cloud(14,40,'#ddd4ca')}${drops}${bolt}</svg>`;
 }
 const DEF={lat:13.0827,lon:80.2707,name:'Chennai'};
-let place=store.get('place',DEF),wxKind='clear',cloudCover=15,windKmh=12;
+let place=store.get('place',DEF),wxKind='clear';
 const aqiTxt=a=>a<=50?'Good':a<=100?'Moderate':a<=150?'Sensitive':a<=200?'Unhealthy':'Very poor';
 const hm=s=>new Date(s).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
 async function loadWx(){
   try{
-    const u=`https://api.open-meteo.com/v1/forecast?latitude=${place.lat}&longitude=${place.lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day,cloud_cover&hourly=temperature_2m,weather_code,precipitation_probability,is_day&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=2`;
+    const u=`https://api.open-meteo.com/v1/forecast?latitude=${place.lat}&longitude=${place.lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day&hourly=temperature_2m,weather_code,is_day&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=2`;
     const w=await (await fetch(u)).json(),c=w.current;
     const [txt,kind]=WMO[c.weather_code]||['—','cloudy'];
-    wxKind=kind;cloudCover=c.cloud_cover;windKmh=c.wind_speed_10m;
+    wxKind=kind;buildDrops();
     sunrise=new Date(w.daily.sunrise[0]);sunset=new Date(w.daily.sunset[0]);
     $('wxi').innerHTML=icon(kind,!!c.is_day);
     $('wxt').textContent=Math.round(c.temperature_2m)+'°';
@@ -275,156 +256,45 @@ async function loadWx(){
     $('wxl').textContent=place.name;
     let aq='—';
     try{const a=await (await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${place.lat}&longitude=${place.lon}&current=us_aqi`)).json();if(a.current&&a.current.us_aqi!=null)aq=`${Math.round(a.current.us_aqi)} ${aqiTxt(a.current.us_aqi)}`}catch(e){}
-    const st=[['High / Low',`${Math.round(w.daily.temperature_2m_max[0])}° / ${Math.round(w.daily.temperature_2m_min[0])}°`],['Humidity',c.relative_humidity_2m+'%'],['Wind',Math.round(c.wind_speed_10m)+' km/h'],['Sunrise',hm(w.daily.sunrise[0])],['Sunset',hm(w.daily.sunset[0])],['Air quality',aq]];
+    const st=[['High / Low',`${Math.round(w.daily.temperature_2m_max[0])}° / ${Math.round(w.daily.temperature_2m_min[0])}°`],['Humidity',c.relative_humidity_2m+'%'],['Wind',Math.round(c.wind_speed_10m)+' km/h'],['Sunrise',hm(w.daily.sunrise[0])],['Sunset',hm(w.daily.sunset[0])],['Air',aq]];
     $('wxg').innerHTML=st.map(([k,v])=>`<div class="st"><small>${k}</small><b>${esc(v)}</b></div>`).join('');
     const now=Date.now();let i0=w.hourly.time.findIndex(t=>new Date(t).getTime()>now-36e5);if(i0<0)i0=0;
-    $('hours').innerHTML=w.hourly.time.slice(i0,i0+12).map((t,j)=>{const i=i0+j,k=(WMO[w.hourly.weather_code[i]]||['','cloudy'])[1];
-      return `<div class="hr">${j?new Date(t).toLocaleTimeString('en-US',{hour:'numeric'}):'Now'}${icon(k,w.hourly.is_day[i])}<b>${Math.round(w.hourly.temperature_2m[i])}°</b><div class="p">${w.hourly.precipitation_probability[i]??0}%</div></div>`}).join('');
-    build();
+    $('hours').innerHTML=[0,1,2,3,4,5].map(j=>{const i=i0+j*2,k=(WMO[w.hourly.weather_code[i]]||['','cloudy'])[1];
+      return `<div class="hr">${j?new Date(w.hourly.time[i]).toLocaleTimeString('en-US',{hour:'numeric'}):'Now'}${icon(k,w.hourly.is_day[i])}<b>${Math.round(w.hourly.temperature_2m[i])}°</b></div>`}).join('');
   }catch(e){$('wxc').textContent='Weather unavailable right now'}
 }
 async function nameFor(lat,lon){try{const r=await (await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`)).json();return r.city||r.locality||r.principalSubdivision||'Your location'}catch(e){return 'Your location'}}
 function locate(){if(!navigator.geolocation)return;$('loc').textContent='Locating…';
-  navigator.geolocation.getCurrentPosition(async p=>{const lat=+p.coords.latitude.toFixed(3),lon=+p.coords.longitude.toFixed(3);place={lat,lon,name:await nameFor(lat,lon)};store.set('place',place);$('loc').textContent='Update location';loadWx()},
+  navigator.geolocation.getCurrentPosition(async p=>{const lat=+p.coords.latitude.toFixed(3),lon=+p.coords.longitude.toFixed(3);place={lat,lon,name:await nameFor(lat,lon)};store.set('place',place);$('loc').textContent='Update';loadWx()},
   ()=>{$('loc').textContent='Use my location'},{timeout:10000,maximumAge:36e5})}
 $('loc').onclick=locate;
-if(store.get('place',null))$('loc').textContent='Update location';
+if(store.get('place',null))$('loc').textContent='Update';
 loadWx();setInterval(loadWx,15*60*1000);
 if(navigator.permissions)navigator.permissions.query({name:'geolocation'}).then(s=>{if(s.state==='granted')locate()}).catch(()=>{});
 
-/* ===== living wallpaper: original pirate seascape ===== */
-const cv=$('sky'),cx=cv.getContext('2d');
-let W=0,H=0,stars=[],clouds=[],drops=[],gulls=[],ship={x:0},t0=performance.now();
-const lerp=(a,b,t)=>a+(b-a)*t;
-const mix=(c1,c2,t)=>{t=Math.max(0,Math.min(1,t));const a=c1.match(/\w\w/g).map(h=>parseInt(h,16)),b=c2.match(/\w\w/g).map(h=>parseInt(h,16));return `rgb(${a.map((v,i)=>Math.round(lerp(v,b[i],t))).join(',')})`};
+const cv=$('fx'),cx=cv.getContext('2d');let W=0,H=0,embers=[],drops=[];
+function mk(any){return{x:W*(.2+Math.random()*.6)+(Math.random()-.5)*W*.3,y:any?Math.random()*H:H+10,r:.6+Math.random()*2.2,v:12+Math.random()*38,s:Math.random()*6,l:.4+Math.random()*.6,h:Math.random()<.7?28+Math.random()*20:0}}
+function buildDrops(){drops=(wxKind==='rain'||wxKind==='storm'||wxKind==='snow')?Array.from({length:Math.round(W/7)},()=>({x:Math.random()*W,y:Math.random()*H,v:wxKind==='snow'?40+Math.random()*30:520+Math.random()*200})):[]}
 function size(){const dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
-  stars=Array.from({length:Math.round(W/7)},()=>({x:Math.random()*W,y:Math.random()*H*.6,r:Math.random()*1.3+.3,p:Math.random()*6}));
-  gulls=Array.from({length:5},(_,i)=>({x:Math.random()*W,y:H*(.12+Math.random()*.3),s:.6+Math.random()*.6,v:18+Math.random()*22,p:Math.random()*6}));
-  if(!ship.x)ship.x=W*.62;build()}
-function build(){const n=Math.round(3+(cloudCover/100)*9);clouds=Array.from({length:n},()=>({x:Math.random()*W,y:H*(.05+Math.random()*.35),s:.6+Math.random()*1.1,v:3+Math.random()*8}));
-  drops=(wxKind==='rain'||wxKind==='storm'||wxKind==='snow')?Array.from({length:Math.round(W/5)},()=>({x:Math.random()*W,y:Math.random()*H,v:wxKind==='snow'?40+Math.random()*30:480+Math.random()*200})):[]}
-const HZ=()=>H*.70; // horizon
-function wave(x,L,tt){const base=HZ()+L*H*.075+H*.02,amp=(3+L*4)*(1+Math.min(windKmh,40)/40),sp=.5+L*.35;
-  return base+Math.sin(x/(110-L*22)+tt*sp)*amp+Math.sin(x/41-tt*sp*1.4)*amp*.35}
-function drawShip(x,tt,g){
-  const y=wave(x,1,tt)-4, ang=(wave(x+30,1,tt)-wave(x-30,1,tt))/60, s=Math.max(.7,Math.min(1.35,W/1300));
-  cx.save();cx.translate(x,y);cx.rotate(Math.atan(ang)*.8);cx.scale(s,s);
-  const wood=mix('2a1a12','8a4b2a',g),wood2=mix('1d120c','5f321c',g),sail=mix('5b5f74','fff6e0',g),rope=mix('20180f','3b2a1d',g);
-  // masts
-  cx.fillStyle=wood2;cx.fillRect(-36,-150,6,150);cx.fillRect(18,-170,7,170);cx.fillRect(58,-90,4,90);
-  // sails (billow with wind)
-  const bw=8+Math.sin(tt*1.6)*3;
-  const sailP=(mx,top,h,w)=>{cx.beginPath();cx.moveTo(mx-w/2,top);cx.quadraticCurveTo(mx+bw*.4,top-6,mx+w/2,top);cx.quadraticCurveTo(mx+w/2+bw,top+h/2,mx+w/2,top+h);cx.quadraticCurveTo(mx,top+h+5,mx-w/2,top+h);cx.quadraticCurveTo(mx-w/2+bw,top+h/2,mx-w/2,top);cx.fill()};
-  cx.fillStyle=sail;sailP(-33,-140,52,62);sailP(-33,-82,46,74);sailP(21,-160,58,72);sailP(21,-96,52,86);
-  cx.beginPath();cx.moveTo(62,-86);cx.lineTo(108,-14);cx.lineTo(62,-14);cx.closePath();cx.fill();
-  // emblem on main sail: original compass star
-  cx.save();cx.translate(23,-130);cx.fillStyle=mix('3a3550','c0392b',g);cx.beginPath();for(let i=0;i<8;i++){const r=i%2?6:16,a=i*Math.PI/4-Math.PI/2;cx.lineTo(Math.cos(a)*r,Math.sin(a)*r)}cx.closePath();cx.fill();
-  cx.fillStyle=sail;cx.beginPath();cx.arc(0,0,3.5,0,7);cx.fill();cx.restore();
-  // flag (original: teal field, white compass star)
-  const fx=21,fy=-182;cx.fillStyle=mix('124a52','16b3a5',g);cx.beginPath();cx.moveTo(fx,fy);
-  for(let i=0;i<=10;i++)cx.lineTo(fx-i*3.6,fy+Math.sin(tt*6+i*.7)*2.4);
-  for(let i=10;i>=0;i--)cx.lineTo(fx-i*3.6,fy+18+Math.sin(tt*6+i*.7)*2.4);cx.closePath();cx.fill();
-  cx.fillStyle='#fff';cx.save();cx.translate(fx-18,fy+9+Math.sin(tt*6+3.5)*2.4);cx.beginPath();for(let i=0;i<8;i++){const r=i%2?2:6,a=i*Math.PI/4-Math.PI/2;cx.lineTo(Math.cos(a)*r,Math.sin(a)*r)}cx.fill();cx.restore();
-  // rigging
-  cx.strokeStyle=rope;cx.lineWidth=1;cx.beginPath();cx.moveTo(-80,-6);cx.lineTo(-33,-150);cx.lineTo(21,-170);cx.lineTo(108,-14);cx.moveTo(-33,-150);cx.lineTo(-33,-4);cx.stroke();
-  // hull
-  cx.fillStyle=wood;cx.beginPath();cx.moveTo(-92,-22);cx.lineTo(96,-24);cx.quadraticCurveTo(120,-30,128,-44);cx.lineTo(122,-12);cx.quadraticCurveTo(100,18,40,20);cx.lineTo(-56,20);cx.quadraticCurveTo(-88,14,-96,-6);cx.lineTo(-104,-36);cx.lineTo(-92,-22);cx.closePath();cx.fill();
-  cx.fillStyle=wood2;cx.fillRect(-90,-4,206,4);cx.fillStyle=mix('3a2a14','e0b354',g);cx.fillRect(-92,-24,212,3);
-  // portholes / lanterns glow at night
-  for(let i=0;i<5;i++){cx.fillStyle=g<.4?`rgba(255,200,90,${.9-g})`:mix('1a1a1a','3a2414',g);cx.beginPath();cx.arc(-60+i*36,8,3.6,0,7);cx.fill()}
-  cx.restore();
-  // wake
-  cx.strokeStyle='rgba(255,255,255,.45)';cx.lineWidth=1.4;cx.beginPath();for(let i=0;i<4;i++){const wx=x-110*s-i*26,wy=wave(wx,1,tt)+2;cx.moveTo(wx,wy);cx.quadraticCurveTo(wx-10,wy-3,wx-22,wy)}cx.stroke();
-}
-function drawIsland(g,tt){
-  const x=W*.16,y=HZ()+2,w=Math.max(160,W*.17);
-  cx.fillStyle=mix('101830','2e6b4f',g);cx.beginPath();cx.moveTo(x-w/2,y);cx.quadraticCurveTo(x-w*.2,y-w*.22,x+w*.05,y-w*.16);cx.quadraticCurveTo(x+w*.3,y-w*.12,x+w/2,y);cx.closePath();cx.fill();
-  cx.fillStyle=mix('1a1f36','e9cf8f',g);cx.beginPath();cx.ellipse(x,y,w*.52,5,0,0,7);cx.fill();
-  // palms swaying
-  for(const[px,ph,lean]of[[x-w*.12,w*.32,-.12],[x+w*.12,w*.26,.15]]){const sw=Math.sin(tt*.9+px)*.04;
-    cx.strokeStyle=mix('15131f','6b4a2b',g);cx.lineWidth=4;cx.beginPath();cx.moveTo(px,y-w*.12);const tx=px+Math.sin(lean+sw)*ph,ty=y-w*.12-ph;cx.quadraticCurveTo(px+lean*ph*.6,y-w*.12-ph*.5,tx,ty);cx.stroke();
-    cx.fillStyle=mix('0f1a22','2f8f4e',g);for(let k=0;k<6;k++){const a=k/6*Math.PI*2+sw*3;cx.save();cx.translate(tx,ty);cx.rotate(a);cx.beginPath();cx.ellipse(16,0,18,4,.25,0,7);cx.fill();cx.restore()}}
-}
-function drawGull(gl,tt,g){const f=Math.sin(tt*6+gl.p)*6*gl.s;cx.strokeStyle=g>.4?'rgba(40,40,55,.85)':'rgba(220,230,255,.7)';cx.lineWidth=1.8;cx.beginPath();
-  cx.moveTo(gl.x-12*gl.s,gl.y-f);cx.quadraticCurveTo(gl.x-5*gl.s,gl.y-4*gl.s,gl.x,gl.y);cx.quadraticCurveTo(gl.x+5*gl.s,gl.y-4*gl.s,gl.x+12*gl.s,gl.y-f);cx.stroke()}
-function weatherFx(tt){
-  if(!drops.length)return;cx.strokeStyle=wxKind==='snow'?'rgba(255,255,255,.9)':'rgba(180,215,255,.5)';cx.fillStyle='#fff';cx.lineWidth=1.2;cx.beginPath();
-  for(const d of drops){d.y+=d.v/60;d.x-=d.v/600;if(d.y>H){d.y=-10;d.x=Math.random()*W}
-    if(wxKind==='snow'){cx.moveTo(d.x+2,d.y);cx.arc(d.x,d.y,2,0,7)}else{cx.moveTo(d.x,d.y);cx.lineTo(d.x-1.5,d.y+12)}}
-  wxKind==='snow'?cx.fill():cx.stroke();
-  if(wxKind==='storm'&&Math.sin(tt*.9)>.995){cx.fillStyle='rgba(255,255,255,.35)';cx.fillRect(0,0,W,H)}}
-function draw(now){
-  if(wallImg){const tt=(now-t0)/1000,iw=wallImg.naturalWidth,ih=wallImg.naturalHeight,k=Math.max(W/iw,H/ih)*(1.06+(RM?0:.03*Math.sin(tt/18)));
-    const dw=iw*k,dh=ih*k;cx.drawImage(wallImg,(W-dw)/2+(RM?0:Math.sin(tt/23)*10),(H-dh)/2+(RM?0:Math.cos(tt/29)*8),dw,dh);
-    const vg=cx.createLinearGradient(0,0,0,H);vg.addColorStop(0,'rgba(5,10,25,.35)');vg.addColorStop(.5,'rgba(5,10,25,.05)');vg.addColorStop(1,'rgba(5,10,25,.45)');cx.fillStyle=vg;cx.fillRect(0,0,W,H);
-    for(const gl of gulls){gl.x+=RM?0:gl.v/60;if(gl.x>W+30){gl.x=-30;gl.y=H*(.12+Math.random()*.3)}drawGull(gl,tt,1)}
-    weatherFx(tt);if(!RM)requestAnimationFrame(draw);return}
-  const n=Date.now(),tt=(now-t0)/1000;
-  const sr=sunrise||new Date(new Date(n).setHours(6,10,0,0)),ss=sunset||new Date(new Date(n).setHours(17,50,0,0));
-  const f=(n-sr)/(ss-sr),day=f>=0&&f<=1;
-  const alt=day?Math.sin(Math.PI*f):-Math.min(1,Math.abs(f<0?f:f-1)*6);
-  const g=Math.max(0,Math.min(1,(alt+0.15)/0.6)),warm=day?Math.max(0,1-alt*3):Math.max(0,1+alt*4)*.8;
-  const gray=(wxKind==='cloudy'||wxKind==='rain'||wxKind==='storm'||wxKind==='fog')?.42:0;
-  const top=mix('0b1030','2a78d6',g),mid=mix('1c2456','8fd0ff',g);
-  const grd=cx.createLinearGradient(0,0,0,HZ());grd.addColorStop(0,top);grd.addColorStop(.75,mid);grd.addColorStop(1,mix('2a2a5a','c9ecff',g));
-  cx.fillStyle=grd;cx.fillRect(0,0,W,H);
-  if(warm>0){const wg=cx.createRadialGradient(W*.5,HZ(),0,W*.5,HZ(),W*.75);wg.addColorStop(0,`rgba(255,120,80,${.45*warm})`);wg.addColorStop(1,'rgba(255,120,80,0)');cx.fillStyle=wg;cx.fillRect(0,0,W,H)}
-  if(gray){cx.fillStyle=`rgba(70,80,100,${gray*(.5+.5*g)})`;cx.fillRect(0,0,W,H)}
-  if(g<.6){cx.fillStyle='#fff';for(const s of stars){cx.globalAlpha=(1-g/.6)*(.4+.6*Math.sin(tt*1.4+s.p)**2);cx.beginPath();cx.arc(s.x,s.y,s.r,0,7);cx.fill()}cx.globalAlpha=1}
-  // sun / moon
-  const ff=day?f:(((f<0?f+1:f-1)%1)+1)%1, ax=W*(.1+.8*ff), ay=HZ()-Math.sin(Math.PI*ff)*H*.58;
-  if(day){const r=Math.max(28,W*.024);const hg=cx.createRadialGradient(ax,ay,0,ax,ay,r*6);hg.addColorStop(0,'rgba(255,214,110,.6)');hg.addColorStop(1,'rgba(255,214,110,0)');cx.fillStyle=hg;cx.beginPath();cx.arc(ax,ay,r*6,0,7);cx.fill();cx.fillStyle=mix('ff7a3d','fff1b0',alt*2);cx.beginPath();cx.arc(ax,ay,r*(1+.03*Math.sin(tt*2)),0,7);cx.fill()}
-  else{const r=Math.max(22,W*.017);const hg=cx.createRadialGradient(ax,ay,0,ax,ay,r*5);hg.addColorStop(0,'rgba(200,215,255,.35)');hg.addColorStop(1,'rgba(200,215,255,0)');cx.fillStyle=hg;cx.beginPath();cx.arc(ax,ay,r*5,0,7);cx.fill();cx.fillStyle='#eef2ff';cx.beginPath();cx.arc(ax,ay,r,0,7);cx.fill();cx.fillStyle=top;cx.beginPath();cx.arc(ax+r*.45,ay-r*.25,r*.85,0,7);cx.fill()}
-  // clouds
-  const cc=gray?mix('4a5468','dfe5ef',g):mix('2f3560','ffffff',g);
-  for(const c of clouds){c.x+=RM?0:c.v/60;if(c.x-170*c.s>W)c.x=-170*c.s;cx.fillStyle=cc;cx.globalAlpha=.55+.35*g;cx.beginPath();
-    for(const[dx,dy,rr]of[[0,0,30],[34,-14,38],[72,0,30],[36,10,32],[-28,8,22],[100,10,22]]){cx.moveTo(c.x+dx*c.s+rr*c.s,c.y+dy*c.s);cx.arc(c.x+dx*c.s,c.y+dy*c.s,rr*c.s,0,7)}cx.fill()}
-  cx.globalAlpha=1;
-  for(const gl of gulls){gl.x+=RM?0:gl.v/60;if(gl.x>W+30){gl.x=-30;gl.y=H*(.12+Math.random()*.3)}gl.y+=Math.sin(tt+gl.p)*.15;drawGull(gl,tt,g)}
-  drawIsland(g,tt);
-  // far sea
-  cx.fillStyle=mix('0c1636','2f86c9',g);cx.fillRect(0,HZ(),W,H-HZ());
-  // sun glitter path
-  cx.fillStyle=day?'rgba(255,226,150,.55)':'rgba(220,230,255,.35)';
-  for(let i=0;i<22;i++){const yy=HZ()+4+i*6,w=(24-i)*2.6*(.5+.5*Math.sin(tt*3+i*1.7));cx.fillRect(ax-w/2+Math.sin(tt*2+i)*8,yy,w,1.6)}
-  // back wave, ship, front waves
-  const layers=[['0e1a40','2a7cc0'],['0c1838','1f6aa8'],['0a142e','17598f'],['08112a','124a7a']];
-  const wl=L=>{cx.beginPath();cx.moveTo(0,H);for(let x=0;x<=W;x+=10)cx.lineTo(x,wave(x,L,tt));cx.lineTo(W,H);cx.closePath();cx.fillStyle=mix(layers[L][0],layers[L][1],g);cx.fill();
-    cx.strokeStyle=`rgba(255,255,255,${.12+.1*g})`;cx.lineWidth=1.2;cx.beginPath();for(let x=0;x<=W;x+=10){const y=wave(x,L,tt);Math.sin(x/60+tt+L)>.6?cx.lineTo(x,y):cx.moveTo(x,y)}cx.stroke()};
-  wl(0);
-  if(!RM){ship.x+=W/5200;if(ship.x>W+160)ship.x=-160}
-  drawShip(ship.x,tt,g);
-  wl(1);wl(2);wl(3);
-  weatherFx(tt);
-  if(!RM)requestAnimationFrame(draw);
-}
+  embers=Array.from({length:Math.round(W/16)},()=>mk(true));buildDrops()}
+let last=performance.now();
+function frame(now){const dt=Math.min(.05,(now-last)/1000),tt=now/1000;last=now;cx.clearRect(0,0,W,H);
+  cx.globalCompositeOperation='lighter';
+  for(const e of embers){e.y-=e.v*dt;e.x+=Math.sin(tt*1.3+e.s)*12*dt;if(e.y<-10)Object.assign(e,mk(false));
+    const a=e.l*(.55+.45*Math.sin(tt*4+e.s))*Math.max(0,Math.min(1,e.y/(H*.25)));
+    const g=cx.createRadialGradient(e.x,e.y,0,e.x,e.y,e.r*4);g.addColorStop(0,`hsla(${e.h},100%,65%,${a})`);g.addColorStop(1,`hsla(${e.h},100%,50%,0)`);
+    cx.fillStyle=g;cx.beginPath();cx.arc(e.x,e.y,e.r*4,0,7);cx.fill()}
+  cx.globalCompositeOperation='source-over';
+  if(drops.length){cx.strokeStyle=wxKind==='snow'?'rgba(255,255,255,.85)':'rgba(190,210,255,.35)';cx.fillStyle='#fff';cx.lineWidth=1.1;cx.beginPath();
+    for(const d of drops){d.y+=d.v*dt;d.x-=d.v*dt/10;if(d.y>H){d.y=-10;d.x=Math.random()*W}
+      if(wxKind==='snow'){cx.moveTo(d.x+2,d.y);cx.arc(d.x,d.y,2,0,7)}else{cx.moveTo(d.x,d.y);cx.lineTo(d.x-1.4,d.y+12)}}
+    wxKind==='snow'?cx.fill():cx.stroke();
+    if(wxKind==='storm'&&Math.sin(tt*.9)>.996){cx.fillStyle='rgba(255,255,255,.25)';cx.fillRect(0,0,W,H)}}
+  requestAnimationFrame(frame)}
 addEventListener('resize',size);size();
-if(RM){draw(performance.now());setInterval(()=>draw(performance.now()),60000)}else requestAnimationFrame(draw);
+if(!RM){requestAnimationFrame(frame);
+  const wall=$('wall');addEventListener('mousemove',e=>{wall.style.setProperty('--px',((e.clientX/W-.5)*-14)+'px');wall.style.setProperty('--py',((e.clientY/H-.5)*-10)+'px')})}
 
-
-/* ===== custom wallpaper ===== */
-let wallImg=null;
-const idb=()=>new Promise((res,rej)=>{const r=indexedDB.open('sp_wall',1);r.onupgradeneeded=()=>r.result.createObjectStore('w');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
-const idbGet=async()=>{try{const d=await idb();return await new Promise(r=>{const q=d.transaction('w').objectStore('w').get('img');q.onsuccess=()=>r(q.result||null);q.onerror=()=>r(null)})}catch(e){return null}};
-const idbSet=async v=>{try{const d=await idb();await new Promise(r=>{const t=d.transaction('w','readwrite');v?t.objectStore('w').put(v,'img'):t.objectStore('w').delete('img');t.oncomplete=r;t.onerror=r})}catch(e){}};
-const loadImg=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
-let syncedOk=false;
-async function applyWall(){
-  const mode=store.get('wallmode','auto');wallImg=null;
-  if(mode!=='scene'&&mode!=='synced'){const b=await idbGet();if(b)wallImg=await loadImg(URL.createObjectURL(b))}
-  if(!wallImg&&mode!=='scene'){const i=await loadImg('wallpaper.jpg?v='+Math.floor(Date.now()/36e5));if(i){wallImg=i;syncedOk=true}}
-  document.querySelectorAll('#wallmenu [data-w]').forEach(b=>b.classList.toggle('on',(b.dataset.w==='scene'&&!wallImg)||(b.dataset.w==='synced'&&syncedOk&&wallImg&&mode!=='auto-local')));
-  if(RM)draw(performance.now());
-}
-const wb=$('wallbtn'),wm=$('wallmenu');
-wb.onclick=()=>{const o=wm.classList.toggle('open');wb.setAttribute('aria-expanded',o)};
-document.addEventListener('click',e=>{if(!wm.contains(e.target)&&e.target!==wb){wm.classList.remove('open');wb.setAttribute('aria-expanded',false)}});
-wm.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{store.set('wallmode',b.dataset.w);applyWall();wm.classList.remove('open')});
-$('wfile').onchange=async e=>{const f=e.target.files[0];if(!f)return;await idbSet(f);store.set('wallmode','auto');applyWall();wm.classList.remove('open')};
-$('wclear').onclick=async()=>{await idbSet(null);store.set('wallmode','auto');applyWall();wm.classList.remove('open')};
-applyWall();
-
-/* focus timer */
 let total=1500,left=total,iv=null;
 const tm=$('tm'),ts=$('tstart'),arc=$('arc'),C=326.7;
 const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
