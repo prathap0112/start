@@ -91,6 +91,13 @@ button.b:hover{border-color:var(--teal)}button.b.on{background:var(--teal);color
 button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
 .quote{font:500 15px/1.5 "Space Grotesk"}
 .quote small{display:block;color:var(--muted);font:13px Inter;margin-top:6px}
+.wallbtn{position:fixed;right:18px;bottom:18px;z-index:5;display:flex;align-items:center;gap:8px;padding:0 16px;min-height:44px;border-radius:14px;color:#fff;font:600 14px Inter;cursor:pointer}
+.wallmenu{position:fixed;right:18px;bottom:72px;z-index:5;width:260px;padding:10px;display:none}
+.wallmenu.open{display:block}
+.wallmenu button,.wallmenu label{display:block;width:100%;text-align:left;background:none;border:0;color:var(--ink);font:500 14px Inter;padding:10px 12px;border-radius:10px;cursor:pointer;min-height:44px}
+.wallmenu button:hover,.wallmenu label:hover{background:var(--panel2)}
+.wallmenu .on{color:var(--teal)}
+.wallmenu small{display:block;color:var(--muted);font-size:12px;padding:4px 12px 6px}
 .foot{color:#d3def2;font-size:13px;text-align:center;margin-top:28px;text-shadow:0 1px 6px rgba(0,0,0,.6)}
 @media(max-width:600px){.search{flex-direction:column}.go{justify-content:center}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.pin,.card{opacity:1}}
@@ -168,6 +175,14 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 </main>
 </div>
 
+<button class="wallbtn glass" id="wallbtn" type="button" aria-expanded="false">Wallpaper</button>
+<div class="wallmenu glass" id="wallmenu" role="menu">
+  <button type="button" data-w="scene" role="menuitem">Animated seascape</button>
+  <button type="button" data-w="synced" id="wsync" role="menuitem">Synced wallpaper (all computers)</button>
+  <label role="menuitem">Upload image from this computer…<input type="file" id="wfile" accept="image/*" hidden></label>
+  <button type="button" id="wclear" role="menuitem">Remove uploaded image</button>
+  <small id="wnote">Uploaded images stay on this computer. Weather effects still animate on top.</small>
+</div>
 <script>
 {
 const $=id=>document.getElementById(id);
@@ -332,7 +347,18 @@ function drawIsland(g,tt){
 }
 function drawGull(gl,tt,g){const f=Math.sin(tt*6+gl.p)*6*gl.s;cx.strokeStyle=g>.4?'rgba(40,40,55,.85)':'rgba(220,230,255,.7)';cx.lineWidth=1.8;cx.beginPath();
   cx.moveTo(gl.x-12*gl.s,gl.y-f);cx.quadraticCurveTo(gl.x-5*gl.s,gl.y-4*gl.s,gl.x,gl.y);cx.quadraticCurveTo(gl.x+5*gl.s,gl.y-4*gl.s,gl.x+12*gl.s,gl.y-f);cx.stroke()}
+function weatherFx(tt){
+  if(!drops.length)return;cx.strokeStyle=wxKind==='snow'?'rgba(255,255,255,.9)':'rgba(180,215,255,.5)';cx.fillStyle='#fff';cx.lineWidth=1.2;cx.beginPath();
+  for(const d of drops){d.y+=d.v/60;d.x-=d.v/600;if(d.y>H){d.y=-10;d.x=Math.random()*W}
+    if(wxKind==='snow'){cx.moveTo(d.x+2,d.y);cx.arc(d.x,d.y,2,0,7)}else{cx.moveTo(d.x,d.y);cx.lineTo(d.x-1.5,d.y+12)}}
+  wxKind==='snow'?cx.fill():cx.stroke();
+  if(wxKind==='storm'&&Math.sin(tt*.9)>.995){cx.fillStyle='rgba(255,255,255,.35)';cx.fillRect(0,0,W,H)}}
 function draw(now){
+  if(wallImg){const tt=(now-t0)/1000,iw=wallImg.naturalWidth,ih=wallImg.naturalHeight,k=Math.max(W/iw,H/ih)*(1.06+(RM?0:.03*Math.sin(tt/18)));
+    const dw=iw*k,dh=ih*k;cx.drawImage(wallImg,(W-dw)/2+(RM?0:Math.sin(tt/23)*10),(H-dh)/2+(RM?0:Math.cos(tt/29)*8),dw,dh);
+    const vg=cx.createLinearGradient(0,0,0,H);vg.addColorStop(0,'rgba(5,10,25,.35)');vg.addColorStop(.5,'rgba(5,10,25,.05)');vg.addColorStop(1,'rgba(5,10,25,.45)');cx.fillStyle=vg;cx.fillRect(0,0,W,H);
+    for(const gl of gulls){gl.x+=RM?0:gl.v/60;if(gl.x>W+30){gl.x=-30;gl.y=H*(.12+Math.random()*.3)}drawGull(gl,tt,1)}
+    weatherFx(tt);if(!RM)requestAnimationFrame(draw);return}
   const n=Date.now(),tt=(now-t0)/1000;
   const sr=sunrise||new Date(new Date(n).setHours(6,10,0,0)),ss=sunset||new Date(new Date(n).setHours(17,50,0,0));
   const f=(n-sr)/(ss-sr),day=f>=0&&f<=1;
@@ -369,15 +395,34 @@ function draw(now){
   if(!RM){ship.x+=W/5200;if(ship.x>W+160)ship.x=-160}
   drawShip(ship.x,tt,g);
   wl(1);wl(2);wl(3);
-  if(drops.length){cx.strokeStyle=wxKind==='snow'?'rgba(255,255,255,.9)':'rgba(180,215,255,.5)';cx.fillStyle='#fff';cx.lineWidth=1.2;cx.beginPath();
-    for(const d of drops){d.y+=d.v/60;d.x-=d.v/600;if(d.y>H){d.y=-10;d.x=Math.random()*W}
-      if(wxKind==='snow'){cx.moveTo(d.x+2,d.y);cx.arc(d.x,d.y,2,0,7)}else{cx.moveTo(d.x,d.y);cx.lineTo(d.x-1.5,d.y+12)}}
-    wxKind==='snow'?cx.fill():cx.stroke();
-    if(wxKind==='storm'&&Math.sin(tt*.9)>.995){cx.fillStyle='rgba(255,255,255,.35)';cx.fillRect(0,0,W,H)}}
+  weatherFx(tt);
   if(!RM)requestAnimationFrame(draw);
 }
 addEventListener('resize',size);size();
 if(RM){draw(performance.now());setInterval(()=>draw(performance.now()),60000)}else requestAnimationFrame(draw);
+
+
+/* ===== custom wallpaper ===== */
+let wallImg=null;
+const idb=()=>new Promise((res,rej)=>{const r=indexedDB.open('sp_wall',1);r.onupgradeneeded=()=>r.result.createObjectStore('w');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+const idbGet=async()=>{try{const d=await idb();return await new Promise(r=>{const q=d.transaction('w').objectStore('w').get('img');q.onsuccess=()=>r(q.result||null);q.onerror=()=>r(null)})}catch(e){return null}};
+const idbSet=async v=>{try{const d=await idb();await new Promise(r=>{const t=d.transaction('w','readwrite');v?t.objectStore('w').put(v,'img'):t.objectStore('w').delete('img');t.oncomplete=r;t.onerror=r})}catch(e){}};
+const loadImg=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
+let syncedOk=false;
+async function applyWall(){
+  const mode=store.get('wallmode','auto');wallImg=null;
+  if(mode!=='scene'&&mode!=='synced'){const b=await idbGet();if(b)wallImg=await loadImg(URL.createObjectURL(b))}
+  if(!wallImg&&mode!=='scene'){const i=await loadImg('wallpaper.jpg?v='+Math.floor(Date.now()/36e5));if(i){wallImg=i;syncedOk=true}}
+  document.querySelectorAll('#wallmenu [data-w]').forEach(b=>b.classList.toggle('on',(b.dataset.w==='scene'&&!wallImg)||(b.dataset.w==='synced'&&syncedOk&&wallImg&&mode!=='auto-local')));
+  if(RM)draw(performance.now());
+}
+const wb=$('wallbtn'),wm=$('wallmenu');
+wb.onclick=()=>{const o=wm.classList.toggle('open');wb.setAttribute('aria-expanded',o)};
+document.addEventListener('click',e=>{if(!wm.contains(e.target)&&e.target!==wb){wm.classList.remove('open');wb.setAttribute('aria-expanded',false)}});
+wm.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>{store.set('wallmode',b.dataset.w);applyWall();wm.classList.remove('open')});
+$('wfile').onchange=async e=>{const f=e.target.files[0];if(!f)return;await idbSet(f);store.set('wallmode','auto');applyWall();wm.classList.remove('open')};
+$('wclear').onclick=async()=>{await idbSet(null);store.set('wallmode','auto');applyWall();wm.classList.remove('open')};
+applyWall();
 
 /* focus timer */
 let total=1500,left=total,iv=null;
